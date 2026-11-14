@@ -1,4 +1,4 @@
-**# GameSphere
+# GameSphere
 
 ### Our Games. Our Universe.
 
@@ -35,4 +35,4 @@ For questions or suggestions, please use the GitHub repository's Issues section.
 ---
 
 **GameSphere — Our Games. Our Universe.**
-**
+
