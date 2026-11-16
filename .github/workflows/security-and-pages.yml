@@ -46,6 +46,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes clamav
+          sudo systemctl stop clamav-freshclam.service
           sudo freshclam
 
       - name: Scan deployable website files
@@ -98,6 +99,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes clamav
+          sudo systemctl stop clamav-freshclam.service
           sudo freshclam
 
       - name: Scan Windows installer
