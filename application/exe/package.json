@@ -1,0 +1,55 @@
+{
+  "name": "gamesphere-desktop",
+  "version": "1.0.1",
+  "description": "GameSphere desktop app for Windows",
+  "author": "GameSphere",
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "start": "npm --prefix ..\\.. run build && node scripts\\generate-config.cjs && node scripts\\make-icon.cjs && node scripts\\run-dev.cjs",
+    "dist:win": "npm --prefix ..\\.. run build && node scripts\\generate-config.cjs && node scripts\\make-icon.cjs && node scripts\\package-windows.cjs",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "electron": "^44.7.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "io.gamesphere.desktop",
+    "productName": "GameSphere",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.cjs",
+      "site-protocol.cjs",
+      "app-config.json",
+      "assets/icon.ico",
+      "site/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "GameSphere-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "GameSphere"
+    }
+  },
+  "allowScripts": {
+    "electron@44.7.0": true,
+    "electron-winstaller@5.4.0": true
+  }
+}

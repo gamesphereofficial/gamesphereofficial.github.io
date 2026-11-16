@@ -13,7 +13,7 @@
     :root{color-scheme:dark;--bg:#090b16;--panel:#111425;--text:#f5f5fb;--muted:#a2a6bd;--purple:#9b75ff;--cyan:#63e6e2;--line:rgba(255,255,255,.09)}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif}
     a{color:inherit;text-decoration:none}button,input{font:inherit}.shell{width:min(1180px,calc(100% - 48px));margin:auto}
-    .topbar{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+    .topbar{position:sticky;top:0;z-index:10;height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:#090b16ed;backdrop-filter:blur(16px)}
     .brand{display:flex;align-items:center;gap:11px;font:700 22px "Space Grotesk",sans-serif;letter-spacing:-.7px}
     .brand-mark{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(135deg,#a77aff,#6952e9);box-shadow:0 0 24px #8a66ff55;font-size:19px}
     .nav{display:flex;align-items:center;gap:32px;color:var(--muted);font-size:14px}.nav a:hover,.nav a.active{color:var(--text)}
@@ -30,6 +30,13 @@
     .button{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:9px;border:1px solid transparent;border-radius:11px;padding:0 17px;cursor:pointer;background:linear-gradient(110deg,#a679ff,#7858ec);font-weight:700;font-size:13px;box-shadow:0 8px 24px #7958ec40;transition:transform .2s,filter .2s}
     .button:hover{transform:translateY(-2px);filter:brightness(1.1)}.button.secondary{background:#ffffff0b;border-color:#ffffff24;box-shadow:none}
     .section{padding-top:46px}.section-head{display:flex;align-items:end;justify-content:space-between;margin-bottom:20px}
+    .app-page{min-height:calc(100vh - 128px);padding-bottom:58px;animation:page-enter .24s ease both}
+    .app-page[hidden]{display:none}
+    @keyframes page-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .page-intro{margin:0 0 28px;padding:30px;border:1px solid var(--line);border-radius:18px;background:radial-gradient(ellipse at 90% 0,#9b75ff20,transparent 48%),linear-gradient(120deg,#171a30,#101222)}
+    .page-intro .eyebrow{margin-bottom:10px}
+    .page-intro h1{margin:0;font:600 clamp(28px,4vw,40px)/1.1 "Space Grotesk",sans-serif;letter-spacing:-1.6px}
+    .page-intro p{max-width:660px;margin:10px 0 0;color:var(--muted);font-size:14px;line-height:1.7}
     .section-head h2{margin:0;font:600 23px "Space Grotesk",sans-serif;letter-spacing:-.5px}.section-head p{margin:6px 0 0;color:var(--muted);font-size:13px}
     .text-link{color:#b99cff;font-size:13px;font-weight:600}.game-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
     .game-card{min-width:0;border:1px solid var(--line);border-radius:15px;overflow:hidden;background:var(--panel);transition:transform .22s,border-color .22s}
@@ -112,18 +119,18 @@
     .toast{position:fixed;right:22px;bottom:22px;z-index:5;max-width:min(380px,calc(100% - 44px));border:1px solid #ffffff20;border-radius:13px;background:#191d32;padding:14px 17px;box-shadow:0 12px 45px #0008;color:var(--text);font-size:13px;opacity:0;transform:translateY(12px);transition:.25s;pointer-events:none}
     .toast.show{opacity:1;transform:translateY(0)}.file-input{display:none}[hidden]{display:none!important}
     @media(max-width:800px){.nav{gap:17px}.search{width:150px}.game-grid,.saved-games-grid{grid-template-columns:repeat(2,1fr)}.lower-grid{grid-template-columns:1fr}.hero{padding:43px 35px}}
-    @media(max-width:560px){.shell{width:min(100% - 30px,440px)}.topbar{height:68px}.nav{display:none}.search{width:105px}.hero{min-height:410px;padding:32px 23px;background-position:58% center}h1{font-size:47px;letter-spacing:-2.5px}.section{padding-top:34px}.game-grid,.saved-games-grid{gap:11px}.cover{height:130px}.card-info{padding:11px}.upload-panel{align-items:flex-start}.upload-row{align-items:flex-start;flex-direction:column}.download-card{align-items:flex-start;flex-wrap:wrap;gap:13px;padding:16px}.download-brand-mark{width:46px;height:46px;border-radius:13px;font-size:24px}.download-details{flex-basis:calc(100% - 60px)}.download-button{width:100%}.footer{gap:10px;flex-direction:column}.game-modal{padding:8px}.game-modal-panel{height:100%;border-radius:11px}.launcher-card-button{padding:8px 9px;font-size:10px}}
+    @media(max-width:560px){.shell{width:min(100% - 30px,440px)}.topbar{height:auto;min-height:68px;flex-wrap:wrap;padding:9px 0}.nav{display:flex;order:3;flex:0 0 100%;justify-content:space-between;overflow-x:auto;gap:18px;padding:8px 0 5px}.nav a{flex:none;white-space:nowrap}.nav a.active:after{bottom:-5px}.account{gap:7px}.search{width:105px}.hero{min-height:410px;padding:32px 23px;background-position:58% center}h1{font-size:47px;letter-spacing:-2.5px}.section{padding-top:34px}.app-page{min-height:calc(100vh - 120px);padding-bottom:34px}.page-intro{padding:22px}.game-grid,.saved-games-grid{gap:11px}.cover{height:130px}.card-info{padding:11px}.upload-panel{align-items:flex-start}.upload-row{align-items:flex-start;flex-direction:column}.download-card{align-items:flex-start;flex-wrap:wrap;gap:13px;padding:16px}.download-brand-mark{width:46px;height:46px;border-radius:13px;font-size:24px}.download-details{flex-basis:calc(100% - 60px)}.download-button{width:100%}.footer{gap:10px;flex-direction:column}.game-modal{padding:8px}.game-modal-panel{height:100%;border-radius:11px}.launcher-card-button{padding:8px 9px;font-size:10px}}
   </style>
 </head>
 <body>
   <header class="shell topbar">
-    <a class="brand" href="#" aria-label="GameSphere home"><span class="brand-mark">◈</span>GameSphere</a>
+    <a class="brand" href="#discover" aria-label="GameSphere home"><span class="brand-mark">◈</span>GameSphere</a>
     <nav class="nav" aria-label="Main navigation"><a class="active" href="#discover">Discover</a><a href="#trending">Public Games</a><a href="#my-games">My Games</a><a href="#publish">Publish</a><a href="#download">Download</a></nav>
     <div class="account"><input class="search" id="game-search" type="search" placeholder="⌕  Search games" aria-label="Search games"><a class="signin-link" id="account-link" href="/signin.html">Sign in</a></div>
   </header>
 
   <main class="shell">
-    <section class="hero" id="discover">
+    <section class="hero app-page" id="discover" aria-label="Discover GameSphere">
       <div class="hero-copy">
         <div class="eyebrow">Your next favorite game is here</div>
         <h1>Play beyond<br>the <span class="gradient-text">ordinary.</span></h1>
@@ -132,8 +139,9 @@
       </div>
     </section>
 
-    <section class="section" id="trending">
-      <div class="section-head"><div><h2>Public Games</h2><p>Handpicked worlds and games shared publicly by the community.</p></div><a class="text-link" href="#publish">Publish a game&nbsp; →</a></div>
+    <section class="section app-page" id="trending" aria-labelledby="public-games-title" hidden>
+      <header class="page-intro"><div class="eyebrow">Explore the community</div><h1 id="public-games-title">Public Games</h1><p>Browse games shared by creators. Play a game or save it to your browser library for quick access.</p></header>
+      <div class="section-head"><div><h2>Featured and community games</h2><p>Discover worlds created by the GameSphere community.</p></div><a class="text-link" href="#publish">Publish a game&nbsp; →</a></div>
       <div class="game-grid" id="game-grid">
         <div class="game-card game-player-card" data-title="My Arcade Game">
           <div class="cover cover-upload" id="thumbnailPreview">
@@ -166,28 +174,27 @@
       </div>
     </section>
 
-    <section class="section" id="my-games">
+    <section class="section app-page" id="my-games" aria-labelledby="my-games-title" hidden>
+      <header class="page-intro"><div class="eyebrow">Your collection</div><h1 id="my-games-title">My Games</h1><p>Find your published games and games saved in this browser. Publishing another game won’t replace your earlier hosted games.</p></header>
       <div class="section-head">
-        <div><h2>My Games</h2><p>Your published games, also listed in Public Games.</p></div>
+        <div><h2>Your games</h2><p>Your published games are also listed in Public Games.</p></div>
         <a class="text-link" href="#publish">Publish a game&nbsp; →</a>
       </div>
       <p class="my-games-notice">Hosted games stay in both My Games and Public Games when more games are published. When opened from a local file, uploaded ZIPs are saved only in this browser's local game library.</p>
       <div class="game-grid" id="my-games-grid"></div>
       <p class="my-games-empty" id="my-games-empty">No published or locally saved games yet. Upload a ZIP to add a local copy, or publish from the hosted website.</p>
+
+      <section class="section saved-games-section" id="saved-games-section" hidden>
+        <div class="section-head">
+          <div><h2>Saved games</h2><p>Quick links saved in this browser</p></div>
+        </div>
+        <div class="saved-games-grid" id="saved-games-grid"></div>
+        <p class="saved-game-note">Published games stay in the hosted My Games collection. Saved-game shortcuts are stored only in this browser.</p>
+      </section>
     </section>
 
-    <section class="section saved-games-section" id="saved-games-section" hidden>
-      <div class="section-head">
-        <div><h2>Your saved games</h2><p>Quick links saved in this browser</p></div>
-      </div>
-      <div class="saved-games-grid" id="saved-games-grid"></div>
-      <p class="saved-game-note">Published games stay in the hosted My Games collection. Saved-game shortcuts are stored only in this browser.</p>
-    </section>
-
-    <section class="section download-section" id="download">
-      <div class="section-head">
-        <div class="download-intro"><h2>Download GameSphere</h2><p>Choose your platform to see its planned app package and release version.</p></div>
-      </div>
+    <section class="section download-section app-page" id="download" aria-labelledby="download-title" hidden>
+      <header class="page-intro"><div class="eyebrow">Take GameSphere with you</div><h1 id="download-title">Downloads</h1><p>Get the GameSphere app for your device. Available packages will appear here when they are ready to download.</p></header>
       <div class="download-list">
         <article class="download-card">
           <span class="download-brand-mark" aria-label="GameSphere brand mark">◈</span>
@@ -225,7 +232,9 @@
       <p class="download-release-note">Native app packages are not published yet. Each release will need to be built, tested, and packaged with the GameSphere brand mark before its download is enabled.</p>
     </section>
 
-    <section class="section lower-grid" id="publish">
+    <section class="section app-page" id="publish" aria-labelledby="publish-title" hidden>
+      <header class="page-intro"><div class="eyebrow">Share what you make</div><h1 id="publish-title">Publish a game</h1><p>Upload an HTML5 game or a ZIP export. Preview it locally, then publish online when hosting is configured.</p></header>
+      <div class="lower-grid">
       <div class="upload-panel">
         <div class="upload-row">
           <div class="upload-symbol" aria-hidden="true">↑</div>
@@ -246,6 +255,7 @@
         </div>
       </div>
       <aside class="community-panel"><h2>Built by players, for players.</h2><p>GameSphere is a home for curious minds, experimental games, and the people who make them.</p><div class="community-stat"><div><strong>1.2k+</strong><span>indie games</span></div><div><strong>48k+</strong><span>players</span></div><div><strong>Always</strong><span>discovering</span></div></div></aside>
+      </div>
     </section>
   </main>
 
@@ -276,6 +286,23 @@
     const toast=document.getElementById("toast");
     let toastTimeout;
     function showToast(message){toast.textContent=message;toast.classList.add("show");clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>toast.classList.remove("show"),4200)}
+
+    const appPages=[...document.querySelectorAll(".app-page[id]")];
+    const pageLinks=[...document.querySelectorAll(".nav a[href^='#']")];
+    function showAppPage(){
+      const requestedPage=window.location.hash.slice(1);
+      const page=appPages.find(item=>item.id===requestedPage) || document.getElementById("discover");
+      for(const item of appPages) item.hidden=item!==page;
+      for(const link of pageLinks){
+        const active=link.hash===`#${page.id}`;
+        link.classList.toggle("active",active);
+        if(active) link.setAttribute("aria-current","page");
+        else link.removeAttribute("aria-current");
+      }
+      window.scrollTo(0,0);
+    }
+    window.addEventListener("hashchange",showAppPage);
+    showAppPage();
 
     async function applySiteConfig(){
       if(window.location.protocol==="file:") return;

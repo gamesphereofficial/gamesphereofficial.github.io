@@ -6,3 +6,10 @@ dist/
 .env.*
 !.env.example
 published/
+/test/
+/account.js
+/signin.js
+/gamesphere-config.js
+/local-game.js
+/local-game-library.js
+application/exe/release-*/

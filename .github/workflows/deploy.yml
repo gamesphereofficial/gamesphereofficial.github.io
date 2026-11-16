@@ -1,8 +1,10 @@
-
 name: Build and Deploy GameSphere
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
     branches:
       - main
   workflow_dispatch:
@@ -17,7 +19,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  security-scan:
+    uses: ./.github/workflows/security-and-pages.yml
+
   build:
+    needs: security-scan
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -44,6 +51,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -52,4 +60,3 @@ jobs:
       - name: Deploy GameSphere
         id: deployment
         uses: actions/deploy-pages@v4
-

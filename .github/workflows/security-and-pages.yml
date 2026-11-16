@@ -1,0 +1,104 @@
+name: Malware scan and GitHub Pages
+
+on:
+  workflow_call:
+    inputs:
+      scan_desktop:
+        description: Build and scan the Windows installer
+        type: boolean
+        required: false
+        default: false
+  workflow_dispatch:
+    inputs:
+      scan_desktop:
+        description: Build and scan the Windows installer
+        type: boolean
+        required: false
+        default: false
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  scan-website:
+    name: Scan website before deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build website
+        run: npm run build
+
+      - name: Install ClamAV
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes clamav
+          sudo freshclam
+
+      - name: Scan deployable website files
+        run: clamscan --recursive --infected --no-summary dist
+
+  build-desktop:
+    if: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || inputs.scan_desktop == true }}
+    runs-on: windows-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install website dependencies
+        run: npm ci
+
+      - name: Install desktop packaging dependencies
+        run: npm ci
+        working-directory: application/exe
+
+      - name: Build Windows installer
+        run: npm run dist:win
+        working-directory: application/exe
+
+      - name: Upload Windows installer for scanning
+        uses: actions/upload-artifact@v4
+        with:
+          name: GameSphere-Windows-installer
+          path: application/exe/release/GameSphere-Setup-*.exe
+          if-no-files-found: error
+          retention-days: 7
+
+  scan-desktop:
+    if: ${{ (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) || inputs.scan_desktop == true }}
+    needs: build-desktop
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Windows installer
+        uses: actions/download-artifact@v4
+        with:
+          name: GameSphere-Windows-installer
+          path: installer
+
+      - name: Install ClamAV
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes clamav
+          sudo freshclam
+
+      - name: Scan Windows installer
+        run: clamscan --recursive --infected --no-summary installer
