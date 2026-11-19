@@ -12,4 +12,11 @@ published/
 /gamesphere-config.js
 /local-game.js
 /local-game-library.js
+/makecode-player.js
+/lzma-min.js
+/lzma_worker-min.js
+/scratch-player.js
+/scratch-runtime.js
+/retro-player.js
+/chunks/
 application/exe/release-*/
